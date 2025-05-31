@@ -18,8 +18,8 @@ Mental Health AI Assistant is a smart, empathetic, and conversational mental hea
 
 - **Frontend**: HTML + CSS + JavaScript 
 - **Backend**: Python (Flask)
-- **Database**: 
-- **APIs**: OpenAI GPT
+- **Database**: sqlite3
+- **APIs**: 
 
 ## 💡 Use Case
 

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Journal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fceef5;
+            color: #333;
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #d63384;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 2px solid #f8b7d2;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #fff0f6;
+        }
+
+        button {
+            margin-top: 12px;
+            background: #d63384;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #b82f6f;
+        }
+
+        .entry {
+            background: #fff;
+            padding: 15px;
+            border-left: 5px solid #d63384;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .entry h3 {
+            margin: 0;
+            color: #b82f6f;
+        }
+
+        .entry p {
+            margin: 10px 0;
+        }
+
+        .entry small {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+        }
+
+        a:hover {
+            background:  #b82f6f;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="{{ url_for('homepage') }}" style="
+    display: inline-block;
+    margin-bottom: 20px;
+    background: #d63384 ;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+">← Back to Homepage</a>
+
+    <h1>Dear Diary💗</h1>
+
+    <form method="POST">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="content" rows="5" placeholder="Description" required></textarea>
+        <button type="submit">Save Entry</button>
+    </form>
+
+    <h2>Past Entries</h2>
+
+    {% for entry in entries %}
+    <div class="entry">
+        <h3>{{ entry['title'] }}</h3>
+        <p>{{ entry['content'] }}</p>
+        <small>{{ entry['created_at'] }}</small>
+    </div>
+    {% else %}
+    <p style="text-align: center; color: #777;">No entries yet... write your first one 💌</p>
+    {% endfor %}
+</body>
+
+</html>

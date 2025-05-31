@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker & Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 500px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+        .section:hover {
+            transform: scale(1.05);
+        }
+        .section h2 {
+            color: #6200ea;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Mood Tracker & Chat</header>
+    
+    <div class="container">
+        <a href="{{ url_for('moodtracking') }}" class="section">
+            <h2>Mood Tracking</h2>
+            <p>Track and log your mood daily.</p>
+        </a>
+        <a href="{{ url_for('advises') }}" class="section">
+            <h2>Stress Relief exercises</h2>
+            <p>Get personalized advice based on your mood.</p>
+        </a>
+        <a href="{{ url_for('chats') }}" class="section">
+            <h2>Chat</h2>
+            <p>Chat with AI Therapist Chatbot.</p>
+        </a>
+        <a href="{{ url_for('journalling') }}" class="section">
+            <h2>Journaling</h2>
+            <p>Connect and share your thoughts in real-time.</p>
+        </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+   
+</body>
+</html>

@@ -1,35 +1,51 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
-from datetime import datetime
+from datetime import datetime, timedelta
 import sqlite3
-
 from model import init_db
+import os
+from dotenv import load_dotenv
+import google.generativeai as genai
+
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel("gemini-2.0-flash")  # safer default
 
 app = Flask(__name__)
 
-# Welcome page route
 @app.route('/')
 def welcome():
     return render_template('welcome.html')
 
-# Homepage route (options for mood tracking, chat, journalling, advises)
 @app.route('/homepage')
 def homepage():
     return render_template('homepage.html')
 
-# Mood Tracking page
-# @app.route('/moodtracking')
-# def moodtracking():
-#     return render_template('moodtracking.html')
+@app.route('/chat')
+def chat():
+    return render_template('chats.html')  # make sure you have this
 
-# Chat page
-@app.route('/chats')
-def chats():
-    return render_template('chats.html')
+def get_gemini_response(prompt):
+    try:
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        print("Gemini error:", e)
+        return "Oops... Gemini’s in a mood right now 😵‍💫"
 
-# # Journalling page
-# @app.route('/journalling')
-# def journalling():
-#     return render_template('journalling.html')
+
+@app.route("/chatbot/reply", methods=["POST"])
+def chatbot_reply():
+    user_input = request.json.get("msg", "")
+    prompt = f"""You are a therapist named Aura. Listen to User carefully and understand their situation. You need to speak to them calmly and politely. Give them mental support. Do not answer anything outside being an mental health therapist. do not answer any unrelated questions AT ALL.
+
+    User: {user_input}
+    Bot:"""
+    reply = get_gemini_response(prompt)
+    return jsonify({"reply": reply})
+
+
 
 # Advices page
 @app.route('/advises')
@@ -79,15 +95,30 @@ def get_moods():
     conn.close()
     return jsonify({row['date']: row['mood'] for row in moods})
 
+
 @app.route('/moodtracking')
 def moodtracking():
     conn = get_db_connection()
-    current_month = datetime.now().month
-    current_year = datetime.now().year
+    today = datetime.today()
+    current_month = today.month
+    current_year = today.year
+
+    # Current month data for mood percentages
     moods = conn.execute(
         'SELECT mood FROM mood_entries WHERE strftime("%m", date) = ? AND strftime("%Y", date) = ?',
         (f'{current_month:02}', str(current_year))
     ).fetchall()
+
+    # Previous month data for charting
+    first_this_month = today.replace(day=1)
+    last_prev_month = first_this_month - timedelta(days=1)
+    first_prev_month = last_prev_month.replace(day=1)
+
+    prev_data = conn.execute(
+        'SELECT date, mood FROM mood_entries WHERE date BETWEEN ? AND ? ORDER BY date ASC',
+        (first_prev_month.strftime('%Y-%m-%d'), last_prev_month.strftime('%Y-%m-%d'))
+    ).fetchall()
+
     conn.close()
 
     mood_counts = {}
@@ -96,10 +127,30 @@ def moodtracking():
         mood = row['mood']
         mood_counts[mood] = mood_counts.get(mood, 0) + 1
 
-    # Convert to percentage
     mood_percentages = {mood: round((count / total) * 100, 1) for mood, count in mood_counts.items()} if total else {}
 
-    return render_template('moodtracking.html', mood_percentages=mood_percentages)
+    mood_scores = {
+        "😊 Happy": 4,
+        "🤩 Excited": 5,
+        "😢 Sad": 2,
+        "😴 Tired": 2,
+        "😟 Stressed": 1,
+        "😡 Angry": 1,
+        "🙄 Annoyed": 1,
+    }
+
+    prev_labels = []
+    prev_scores = []
+    for date, mood in prev_data:
+        prev_labels.append(date)
+        prev_scores.append(mood_scores.get(mood, 3))
+
+    return render_template('moodtracking.html',
+        mood_percentages=mood_percentages,
+        prev_labels=prev_labels,
+        prev_scores=prev_scores
+    )
+
 
 if __name__ == '__main__':
     app.run(debug=True)

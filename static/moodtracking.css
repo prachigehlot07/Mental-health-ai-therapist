@@ -1,38 +1,43 @@
+/* === Global Body === */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+    background: linear-gradient(to right, #ffe6f0, #fcddec);
     margin: 0;
     padding: 20px;
-    color: #333;
+    color: #4a0033;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* === Main Container === */
 .container {
     max-width: 700px;
     width: 100%;
     background: white;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(214, 51, 132, 0.15);
     margin-bottom: 40px;
+    border: 2px solid #d63384;
 }
 
+/* === Headings === */
 h1 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 10px;
-    color: #4b0082;
+    color: #d63384;
 }
 
 #monthYear {
     text-align: center;
     font-size: 1.3rem;
     margin-bottom: 20px;
-    color: #444;
+    color: #b82f6f;
 }
 
+/* === Calendar Grid === */
 .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -42,52 +47,61 @@ h1 {
 .weekday {
     font-weight: bold;
     text-align: center;
-    color: #6c5ce7;
+    color: #b82f6f;
 }
 
+/* === Day Cells === */
 .day {
-    background-color: #f3f3f3;
+    background-color: #fff0f5;
     padding: 15px;
     text-align: center;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1px solid #d63384;
+    color: #b82f6f;
 }
 
 .day:hover {
-    background-color: #dfe6e9;
+    background-color: #ffe6f0;
     transform: scale(1.05);
 }
 
+/* === Mood Popup === */
 .mood-popup {
     display: none;
     position: fixed;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: #ffffff;
     padding: 25px 35px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px rgba(214, 51, 132, 0.2);
     border-radius: 15px;
     z-index: 1000;
     text-align: center;
+    border: 2px solid #d63384;
 }
 
 .mood-popup h3 {
     margin-bottom: 15px;
+    color: #b82f6f;
 }
 
 #moodSelect {
     padding: 10px;
     font-size: 16px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #b82f6f;
     margin-bottom: 15px;
+    background-color: #ffe6f0;
+    color: #b82f6f;
 }
 
+/* === Popup Button === */
 .mood-popup button {
     padding: 10px 20px;
-    background-color: #6c5ce7;
+    background-color: #d63384;
     color: white;
     border: none;
     border-radius: 8px;
@@ -97,31 +111,35 @@ h1 {
 }
 
 .mood-popup button:hover {
-    background-color: #4b0082;
+    background-color: #b82f6f;
 }
 
+/* === Mood Chart === */
 canvas#moodChart {
     background-color: white;
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
     width: 100%;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 15px rgba(214, 51, 132, 0.1);
+    border: 1px solid #d63384;
 }
 
+/* === Analysis Section === */
 .analysis-section {
     margin-top: 30px;
-    background-color: #fff;
+    background-color: #fff0f8;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.1);
     width: 90%;
     text-align: center;
+    border: 2px dashed #d63384;
 }
 
 .analysis-section h3 {
     margin-bottom: 15px;
-    color: #000000;
+    color: #b82f6f;
 }
 
 .analysis-section ul {
@@ -132,5 +150,5 @@ canvas#moodChart {
 
 .analysis-section li {
     margin: 5px 0;
-    color: #555;
+    color: #b82f6f;
 }

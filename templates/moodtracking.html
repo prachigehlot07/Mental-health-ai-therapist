@@ -7,7 +7,7 @@
     <title>Mood Tracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='moodtracking.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-     
+
 </head>
 
 <body>
@@ -29,7 +29,7 @@
         <div class="calendar" id="calendar"></div>
         <h3 style="margin-top: 30px;">Mood Frequency This Month</h3>
         <canvas id="moodChart" width="400" height="200"></canvas>
-        <div class="analysis-section" >
+        <div class="analysis-section">
             <h3>This Month's Mood Analysis</h3>
             {% if mood_percentages %}
             <ul>
@@ -41,6 +41,9 @@
             <p>No mood data for this month yet.</p>
             {% endif %}
         </div>
+ <h3 style="margin-top: 50px;">Last Month's Mood Progress</h3>
+    <canvas id="prevMonthChart" width="400" height="200"></canvas>
+
 
 
     </div>
@@ -58,7 +61,54 @@
         <button onclick="saveMood()">Save</button>
     </div>
 
+   
+
+
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+<canvas id="prevMonthChart" width="400" height="200"></canvas>
+
+<script>
+    const prevLabels = {{ prev_labels | tojson | safe }};
+    const prevScores = {{ prev_scores | tojson | safe }};
+
+    const prevCtx = document.getElementById('prevMonthChart').getContext('2d');
+
+    const prevChart = new Chart(prevCtx, {
+        type: 'line',
+        data: {
+            labels: prevLabels,
+            datasets: [{
+                label: 'Previous Month Mood Progress',
+                data: prevScores,
+                fill: false,
+                borderColor: '#ff5e9c',
+                tension: 0.2,
+                pointBackgroundColor: "#ffb6d9"
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 1,
+                    max: 5,
+                    title: {
+                        display: true,
+                        text: 'Mood Score'
+                    },
+                    ticks: {
+                        callback: function (val) {
+                            const moodMap = ["😡", "😟", "😴", "😊", "🤩"];
+                            return moodMap[val - 1] || val;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+
 
 </body>
 

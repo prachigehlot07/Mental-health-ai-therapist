@@ -1,0 +1,105 @@
+/* === Global Body === */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffe6f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* === Main Chat Container === */
+.chat-container {
+  width: 75%;
+  max-width: 1000px;
+  height: 85vh;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(214, 51, 132, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 3px solid #d63384;
+}
+
+/* === Chat Box === */
+#chat-box {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #ffe6f0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* === Messages === */
+.message {
+  padding: 14px 20px;
+  max-width: 65%;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  position: relative;
+}
+
+/* User Messages (Right) */
+.user {
+  align-self: flex-end;
+  background-color: #b82f6f;
+  color: white;
+  border-bottom-right-radius: 0;
+}
+
+/* Bot Messages (Left) */
+.bot {
+  align-self: flex-start;
+  background-color: white;
+  border: 2px solid #d63384;
+  color: #b82f6f;
+  border-bottom-left-radius: 0;
+}
+
+/* === Chat Form === */
+#chat-form {
+  display: flex;
+  padding: 16px;
+  border-top: 3px solid #d63384;
+  background-color: white;
+  gap: 10px;
+}
+
+/* === Input Field === */
+#user-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid #d63384;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+  background-color: #ffe6f0;
+  color: #b82f6f;
+}
+
+#user-input::placeholder {
+  color: #b82f6f;
+  opacity: 0.7;
+}
+
+/* === Send Button === */
+button {
+  padding: 14px 20px;
+  background-color: #d63384;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #b82f6f;
+}
